@@ -86,6 +86,15 @@
     <script src="{{asset "js/infinitescroll.js"}}"></script>
     {{/if}}
 
+    <script>
+        $('a[href^=http]').each(function() {
+            if (this.href.indexOf(location.hostname) === -1) {
+                $(this).click(function() { return true; });
+                $(this).attr({ target: '_blank' });
+            }
+        });
+    </script>
+
     {{!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. --}}
     {{{block "scripts"}}}
 
