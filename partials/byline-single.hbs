@@ -1,9 +1,8 @@
 {{!-- Everything inside the #author tags pulls data from the author --}}
-{{#primary_author}}
-
+{{#author}}
 <section class="author-card">
-    {{#if profile_image}}
-        <img class="author-profile-image" src="{{profile_image}}" alt="{{name}}" />
+    {{#if image}}
+        <img class="author-profile-image" src="{{image}}" alt="{{name}}" />
     {{else}}
         <span class="avatar-wrapper">{{> "icons/avatar"}}</span>
     {{/if}}
@@ -17,7 +16,6 @@
     </section>
 </section>
 <div class="post-full-footer-right">
-    <a class="author-card-button" href="{{url}}">Read More</a>
+    <a class="author-card-button" href="/author/{{slug}}">Read More</a>
 </div>
-
-{{/primary_author}}
+{{/author}}
