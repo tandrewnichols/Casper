@@ -113,7 +113,7 @@ body {
     padding-top: 12px;
     padding-bottom: 12px;
     color: #fff;
-    background: color(var(--darkgrey) l(-5%)) no-repeat center center;
+    background: var(--primary) no-repeat center center;
     background-size: cover;
 }
 
@@ -464,21 +464,22 @@ The knock-on effect of this is ugly browser-scroll bars at the bottom, so 80px o
 }
 
 .post-card-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    padding: 0 25px 25px;
+    padding: 0 25px;
 }
 
 .author-profile-image,
 .avatar-wrapper {
-    display: block;
-    width: 100%;
+    display: inline;
+    width: 34px;
     height: 100%;
     background: color(var(--lightgrey) l(+10%));
     border-radius: 100%;
 
     object-fit: cover;
+}
+
+.author-profile-name {
+    margin-left: 10px;
 }
 
 .post-card-meta .profile-image-wrapper,
@@ -487,9 +488,7 @@ The knock-on effect of this is ugly browser-scroll bars at the bottom, so 80px o
 }
 
 .author-list {
-    display: flex;
-    flex-wrap: wrap-reverse;
-    margin: 0;
+    margin: 20px 0 0;
     padding: 0;
     list-style: none;
 }
@@ -534,9 +533,8 @@ The knock-on effect of this is ugly browser-scroll bars at the bottom, so 80px o
 
 .static-avatar {
     display: block;
-    overflow: hidden;
     margin: 0 -5px;
-    width: 34px;
+    width: 100%;
     height: 34px;
     border: #fff 2px solid;
     border-radius: 100%;
@@ -674,17 +672,29 @@ The first (most recent) post in the list is styled to be bigger than the others 
 }
 
 .post-full {
+    margin: -90px auto 0;
     position: relative;
     z-index: 50;
+}
+.post-full.no-image {
+    margin: 0 auto;
 }
 /* ^ Required to make .post-full-content:before/after z-index stacking work */
 
 .post-full-header {
     margin: 0 auto;
-    padding: 6vw 3vw 3vw;
-    max-width: 1040px;
+    padding: 5vw 3vw 3vw;
     text-align: center;
+    position: absolute;
+    top: 100px;
+    width: 100%;
+    margin: 0 auto;
 }
+.no-image .post-full-header {
+    position: relative;
+    top: 0;
+}
+
 @media (max-width: 500px) {
     .post-full-header {
         padding: 14vw 3vw 10vw;
@@ -695,19 +705,37 @@ The first (most recent) post in the list is styled to be bigger than the others 
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--midgrey);
+    color: white;
     font-size: 1.4rem;
     font-weight: 600;
     text-transform: uppercase;
 }
 
-.post-full-meta-date {
-    color: var(--blue);
+.no-image .post-full-meta {
+    color: var(--darkgrey)
+}
+
+.post-full-meta a, .post-card-meta .tag-list a {
+    display: inline;
+    padding: .3em .6em .3em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+    background-color: var(--secondary);
 }
 
 .post-full-title {
     margin: 0;
-    color: color(var(--darkgrey) l(-5%));
+    color: white;
+}
+
+.no-image .post-full-title {
+    color: var(--darkgrey);
 }
 
 .date-divider {
@@ -717,10 +745,18 @@ The first (most recent) post in the list is styled to be bigger than the others 
 
 .post-full-image {
     margin: 0 -10vw -165px;
-    height: 800px;
+    height: 650px;
     background: var(--lightgrey) center center;
     background-size: cover;
     border-radius: 5px;
+}
+
+.post-cover {
+    background-color: #000;
+    opacity: 0.3;
+    height: 650px;
+    width: 100%;
+    position: absolute;
 }
 
 @media (max-width: 1170px) {
@@ -746,6 +782,7 @@ The first (most recent) post in the list is styled to be bigger than the others 
     font-size: 2.2rem;
     line-height: 1.6em;
     background: #fff;
+    height: 100%;
 }
 
 @media (max-width: 1170px) {
@@ -759,36 +796,15 @@ The first (most recent) post in the list is styled to be bigger than the others 
     }
 }
 
-.post-full-content:before {
-    content: "";
-    position: absolute;
-    top: 15px;
-    left: -5px;
-    z-index: -1;
-    display: block;
-    width: 20px;
-    height: 200px;
-    background: rgba(39,44,49,0.15);
-    filter: blur(5px);
-    transform: rotate(-5deg);
-}
-
-.post-full-content:after {
-    content: "";
-    position: absolute;
-    top: 15px;
-    right: -5px;
-    z-index: -1;
-    display: block;
-    width: 20px;
-    height: 200px;
-    background: rgba(39,44,49,0.15);
-    filter: blur(5px);
-    transform: rotate(5deg);
+.post-full-content {
+    -webkit-box-shadow: 0px 16px 40px -1px rgba(0,0,0,0.43);
+    -moz-box-shadow: 0px 16px 40px -1px rgba(0,0,0,0.43);
+    box-shadow: 0px 16px 40px -1px rgba(0,0,0,0.43);
 }
 
 .no-image .post-full-content {
     padding-top: 0;
+    box-shadow: none;
 }
 
 .no-image .post-full-content:before,
@@ -822,17 +838,16 @@ The first (most recent) post in the list is styled to be bigger than the others 
 }
 
 .post-full-content a {
-    color: #000;
-    box-shadow: var(--blue) 0 -1px 0 inset;
+    color: color(var(--midgrey) l(-25%));
+    box-shadow: var(--secondary) 0 -1px 0 inset;
 }
 
 .post-full-content a:hover {
-    color: var(--blue);
+    color: var(--secondary);
     text-decoration: none;
 }
 
-.post-full-content strong,
-.post-full-content em {
+.post-full-content strong {
     color: color(var(--darkgrey) l(-5%));
 }
 
@@ -1829,11 +1844,6 @@ Usage (In Ghost editor):
     flex-direction: column;
     align-items: center;
     max-width: 920px;
-}
-
-.post-template .post-content > p:first-child {
-    font-size: 1.25em;
-    line-height: 1.5em;
 }
 
 .post-full-content .kg-image {

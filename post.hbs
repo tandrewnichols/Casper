@@ -16,25 +16,42 @@ into the {body} of the default.hbs template --}}
 {{!-- Everything inside the #post tags pulls data from the post --}}
 {{#post}}
 
+{{#if feature_image}}
+<figure class="post-full-image" style="background-image: url({{feature_image}})"></figure>
+<div class="post-cover"></div>
+
+<header class="post-full-header">
+    <h1 class="post-full-title">{{title}}</h1>
+    <section class="post-full-meta">
+        <time class="post-full-meta-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="D MMMM YYYY"}}</time>
+        {{#if tags.length}}
+        <span class="date-divider">/</span>
+        {{/if}}
+        {{#foreach tags}}
+        <a href="{{url}}">{{name}}</a>&nbsp;
+        {{/foreach}}
+    </section>
+</header>
+{{/if}}
+
 <main id="site-main" class="site-main outer">
     <div class="inner">
 
         <article class="post-full {{post_class}} {{#unless feature_image}}no-image{{/unless}}">
-
+            {{#unless feature_image}}
             <header class="post-full-header">
+                <h1 class="post-full-title">{{title}}</h1>
                 <section class="post-full-meta">
                     <time class="post-full-meta-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="D MMMM YYYY"}}</time>
-                    {{#primary_tag}}
-                        <span class="date-divider">/</span> <a href="{{url}}">{{name}}</a>
-                    {{/primary_tag}}
+                    {{#if tags.length}}
+                    <span class="date-divider">/</span>
+                    {{/if}}
+                    {{#foreach tags}}
+                    <a href="{{url}}">{{name}}</a>&nbsp;
+                    {{/foreach}}
                 </section>
-                <h1 class="post-full-title">{{title}}</h1>
             </header>
-
-            {{#if feature_image}}
-            <figure class="post-full-image" style="background-image: url({{feature_image}})">
-            </figure>
-            {{/if}}
+            {{/unless}}
 
             <section class="post-full-content">
                 <div class="post-content">
@@ -93,12 +110,17 @@ into the {body} of the default.hbs template --}}
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
-            {{#if primary_tag}}
-            {{#get "posts" filter="tags:{{primary_tag.slug}}+id:-{{id}}" limit="3" as |related_posts|}}
+            {{!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs --}}
+            {{#next_post}}
+                {{> "post-card"}}
+            {{/next_post}}
+
+            {{#if tags.length}}
+            {{#get "posts" filter="tags:{{tags.0.slug}}+id:-{{id}}" limit="3" as |related_posts|}}
                 {{#if related_posts}}
                 <article class="read-next-card"
-                    {{#if ../primary_tag.feature_image}}
-                        style="background-image: url({{../primary_tag.feature_image}})"
+                    {{#if ../tags.0.feature_image}}
+                        style="background-image: url({{../tags.0.feature_image}})"
                     {{else}}
                         {{#if @blog.cover_image}}
                             style="background-image: url({{@blog.cover_image}})"{{/if}}
@@ -106,9 +128,9 @@ into the {body} of the default.hbs template --}}
                 >
                     <header class="read-next-card-header">
                         <small class="read-next-card-header-sitetitle">&mdash; {{@blog.title}} &mdash;</small>
-                        {{#../primary_tag}}
+                        {{#../tags}}
                         <h3 class="read-next-card-header-title"><a href="{{url}}">{{name}}</a></h3>
-                        {{/../primary_tag}}
+                        {{/../tags}}
                     </header>
                     <div class="read-next-divider">{{> "icons/infinity"}}</div>
                     <div class="read-next-card-content">
@@ -125,11 +147,6 @@ into the {body} of the default.hbs template --}}
                 {{/if}}
             {{/get}}
             {{/if}}
-
-            {{!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs --}}
-            {{#next_post}}
-                {{> "post-card"}}
-            {{/next_post}}
 
             {{!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs --}}
             {{#prev_post}}
