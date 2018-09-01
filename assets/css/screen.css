@@ -166,6 +166,14 @@ body {
     font-weight: 700;
 }
 
+.home-template .site-title {
+    display: flex;
+}
+
+.title-after-image {
+    margin-left: 10px;
+}
+
 .site-logo {
     max-height: 45px;
 }
