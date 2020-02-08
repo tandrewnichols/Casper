@@ -55,7 +55,29 @@ into the {body} of the default.hbs template --}}
 
             <section class="post-full-content">
                 <div class="post-content">
+                    <div style="width:100%">
+                        <ins class="adsbygoogle"
+                            style="display:block;width:100%;"
+                            data-ad-format="fluid"
+                            data-ad-layout-key="-fh+48+ch-9k-mm"
+                            data-ad-client="ca-pub-3478521594413822"
+                            data-ad-slot="2082184693"></ins>
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
                     {{content}}
+                    <div style="width:100%">
+                        <ins class="adsbygoogle"
+                            style="display:block;width:100%;"
+                            data-ad-format="fluid"
+                            data-ad-layout-key="-fh+48+ch-9k-mm"
+                            data-ad-client="ca-pub-3478521594413822"
+                            data-ad-slot="2082184693"></ins>
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
                 </div>
             </section>
 
@@ -115,6 +137,20 @@ into the {body} of the default.hbs template --}}
                 {{> "post-card"}}
             {{/next_post}}
 
+            {{^next_post}}
+                <div class="post-card">
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-format="fluid"
+                        data-ad-layout-key="-6m+dx+10-55+cz"
+                        data-ad-client="ca-pub-3478521594413822"
+                        data-ad-slot="8433512303"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+            {{/next_post}}
+
             {{#if tags.length}}
             {{#get "posts" filter="tags:{{tags.0.slug}}+id:-{{id}}" limit="3" as |related_posts|}}
                 {{#if related_posts}}
@@ -147,12 +183,38 @@ into the {body} of the default.hbs template --}}
                 {{/if}}
             {{/get}}
             {{/if}}
+            {{#unless tags.length}}
+                <div class="post-card">
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-format="fluid"
+                        data-ad-layout-key="-6m+dx+10-55+cz"
+                        data-ad-client="ca-pub-3478521594413822"
+                        data-ad-slot="8433512303"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+            {{/unless}}
 
             {{!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs --}}
             {{#prev_post}}
                 {{> "post-card"}}
             {{/prev_post}}
 
+            {{^prev_post}}
+                <div class="post-card">
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-format="fluid"
+                        data-ad-layout-key="-6m+dx+10-55+cz"
+                        data-ad-client="ca-pub-3478521594413822"
+                        data-ad-slot="8433512303"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+            {{/prev_post}}
         </div>
     </div>
 </aside>
